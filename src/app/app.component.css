@@ -1,0 +1,41 @@
+.add-category {
+  display: flex;
+  align-items: center;
+}
+
+.grocery-card {
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+}
+
+.card-title input {
+  color: #c97d76;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+.grocery-item {
+  display: flex;
+  align-items: center;
+  margin-block: 0.5rem;
+}
+
+.grocery-item input[type="text"] {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #c97d76;
+  width: 300px;
+}
+
+.grocery-item.selected input[type="text"] {
+  text-decoration: line-through;
+}
