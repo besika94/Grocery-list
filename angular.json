@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/grocery-list/browser",
+            "outputPath": "dist/grocery-list",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
