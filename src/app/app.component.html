@@ -1,5 +1,5 @@
 <h1 class="main-title">Grocery List</h1>
-<input type="file" (change)="handleFileInput($event)" style="margin-block: 1rem" />
+<input type="file" #f (change)="handleFileInput($event, f)" style="margin-block: 1rem" />
 <span class="add-category" (click)="addCategory()"
   >Add Category
   <svg
