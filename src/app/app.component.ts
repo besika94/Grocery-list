@@ -1,17 +1,43 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, linkedSignal, model, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, InputTextModule, CheckboxModule, SelectButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  standalone: true,
 })
 export class AppComponent {
   groceryList: any = signal(this.getListFromStorage());
+  stateOptions: any[] = [
+    { label: 'All', value: 'all' },
+    { label: 'Checked', value: 'selected' },
+    { label: 'Not checked', value: 'not_selected' },
+  ];
+  value = model<string>('all');
+
+  filteredList = linkedSignal({
+    source: this.groceryList,
+    computation: () => this.groceryList().slice(),
+  });
+
+  onSelectButtonChange(_: any) {
+    this.filteredList.set(
+      this.groceryList().map((c: any) => {
+        return {
+          ...c,
+          itemsToBy: c.itemsToBy.filter((i: any) =>
+            this.value() === 'all' ? true : i.selected === (this.value() === 'selected')
+          ),
+        };
+      })
+    );
+  }
 
   addCategory() {
     if (this.groceryList().length > 0) {
@@ -32,6 +58,8 @@ export class AppComponent {
         },
       ]);
     }
+
+    this.value.set('all');
 
     this.saveListToStorage();
   }
@@ -82,7 +110,7 @@ export class AppComponent {
 
       this.groceryList.set(
         fileContent
-          .split('category')
+          .split('#')
           .filter((f) => f.replace(/\s/g, '') !== '')
           .map((l, index) => {
             const groceryItem: any = { itemsToBy: [] };

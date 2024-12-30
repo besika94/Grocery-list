@@ -3,4 +3,10 @@
 
 body {
   color: #c97d76;
+  background-color: white;
+  padding-bottom: 3rem;
+}
+
+.p-checkbox-box {
+  background: white;
 }
